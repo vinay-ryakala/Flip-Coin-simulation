@@ -5,11 +5,11 @@ echo "welcome to Flip Coin Simulation"
 HEADS=1
 TAILS=2
 
-read -p "give  number of times filp coin Simulation should run:" number
 headcount=0
 tailcount=0
 counter=0
-while [ $counter -lt $number ]
+
+while [ $counter != 21 ]
 do
 	simulationResult=$((RANDOM%2))
 
@@ -19,8 +19,23 @@ do
 	else
 		((tailcount++))
 	fi
-	((counter++))
+	if [ $headcount -gt $tailcount ]
+	then
+		counter=$headcount
+	else
+		counter=$tailcount
+	fi
 done
 
-echo "$headcount times head won"
-echo "$tailcount times tail won"
+if [ $headcount -gt $tailcount ]
+then   
+	diff=$(($headcount-$tailcount))
+	echo "heads won by $diff"
+elif [ $headcount -lt $tailcount ]
+then
+	diff=$(($tailcount-$headcount))
+	echo "tails won by $diff"
+else
+	echo "Its a tie"
+fi
+
